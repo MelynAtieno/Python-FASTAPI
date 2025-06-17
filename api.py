@@ -12,6 +12,11 @@ def hello(name: str):
 
 initial_string = "Never Give Up"
 
+@app.get("/")
+async def read_text():
+    global initial_string
+    return {"Message":"Successful!", "current_string":initial_string}
+
 @app.post("/add")
 async def add_text(text: str):
     global initial_string
@@ -22,5 +27,10 @@ async def add_text(text: str):
 async def change_text(new_text: str):
     global initial_string
     initial_string = new_text
-    return {"Message": "Text changed","current_string": initial_string}
+    return {"Message": "Text changed", "current_string": initial_string}
 
+@app.delete("/delete")
+async def delete_text():
+    global initial_string
+    initial_string = ""
+    return {"Message":"Text deleted"}
