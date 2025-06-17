@@ -27,11 +27,16 @@ async def post_book(id: int, name: str, author: str):
 async def get_book_id():
     return {"Message":"Success", "Book": {id}}
 
-@app.put(/"books/{id}")
+@app.put("/books/{id}")
 async def edit_book():
     global books
     books[id] = 
     return {"Message": "Book edited successfully!", "Books": books}
 
+@app.delete("/books/{id}")
+async def delete_book():
+    global books
+    books[id] = ""
+    return {"Message": "Book deleted successfully!", "Books": books}
 
 
