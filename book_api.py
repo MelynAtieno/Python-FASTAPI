@@ -31,6 +31,8 @@ async def get_book_id(book_id: int):
 
 @app.put("/books/{book_id}")
 async def edit_book(book_id: int, books: Books):
+    global book_catalog
+    book_catalog[book_id] = books
     results = {"book_id": book_id, "books": book_catalog}
     return results
 
