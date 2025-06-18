@@ -25,7 +25,8 @@ async def add_book(book: Books):
 
 @app.get("/books/{book_id}")
 async def get_book_id(book_id: int):
-    results = {"book_id": book_id, "books": book_catalog}
+    global book_catalog
+    results = {"book_id": book_id, "book": book_catalog[book_id]}
     return results
 
 @app.put("/books/{book_id}")
