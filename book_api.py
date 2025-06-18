@@ -7,47 +7,36 @@ class Books(BaseModel):
     name: str
     author: str
 
-    model_config = {
-        "json_schema_extra": {
-            "examples": [
-                {
-                    "name" : "Rules of Life",
-                    "author" : "John Doe"
-                },
-                {
-                    "name" : "Happy life",
-                    "author" : "James Bennett"
-                }
-            ]
-        }
-    }
+book_catalog = [{"name":"Rules of Life", "author": "John Doe"},{"name":"Happy Life", "author":"James Bennett"}]
         
            
     
 
 @app.get("/books")
 async def get_books():
-    return {"Message":"Success!", "Books": books}
+    global book_catalog
+    return {"Books": book_catalog}
 
 @app.post("/books")
-async def post_book(id: int, name: str, author: str):
-    global books
-    books += id,name,author
-    return {"Message": "Book added successfully!", "Books": books}
+async def add_book(book: Books):
+    global book_catalog
+    book_catalog.append(book)
+    return book
 
-@app.get("/books/{id}")
-async def get_book_id(id: int):
-    return {"Message":"Success", "Book": id}
+@app.get("/books/{book_id}")
+async def get_book_id(book_id: int):
+    results = {"book_id": book_id, "books": book_catalog}
+    return results
 
 @app.put("/books/{book_id}")
 async def edit_book(book_id: int, books: Books):
-    global books
-    return {"Message": "Book edited successfully!", "Books": books}
+    results = {"book_id": book_id, "books": book_catalog}
+    return results
 
-@app.delete("/books/{id}")
-async def delete_book(id: int):
-    global books
-    books[id] = ""
-    return {"Message": "Book deleted successfully!", "Books": books}
+@app.delete("/books/{book_id}")
+async def delete_book(book_id: int):
+    global book_catalog
+    book_catalog.pop(book_id)
+    return {"Message": "Book deleted successfully!", "Books": book_catalog}
 
 
