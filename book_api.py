@@ -36,10 +36,10 @@ async def get_book_id(book_id: int):
 @app.put("/books/{book_id}")
 async def edit_book(book_id: int, book: Books):
     global book_catalog
-    book_catalog[book_id] = book
     if book_id < 0 or book_id >= len(book_catalog):
         raise HTTPException(status_code=404, detail="Book ID does not exist")
     else:
+        book_catalog[book_id] = book
         results = {"book_id": book_id, "books": book_catalog}
         return results
 
